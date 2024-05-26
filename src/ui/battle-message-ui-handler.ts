@@ -159,13 +159,17 @@ export default class BattleMessageUiHandler extends MessageUiHandler {
 
   showText(text: string, delay?: integer, callback?: Function, callbackDelay?: integer, prompt?: boolean, promptDelay?: integer) {
     this.hideNameText();
-    logMsg(text.replace(/@c{.*?}/g, ""));
+    if (text) {
+      logMsg(text.replace(/@c{.*?}/g, ""));
+    }
     super.showText(text, delay, callback, callbackDelay, prompt, promptDelay);
   }
 
   showDialogue(text: string, name: string, delay?: integer, callback?: Function, callbackDelay?: integer, prompt?: boolean, promptDelay?: integer) {
     this.showNameText(name);
-    logMsg(name + ":\n" + text.replace(/@c{.*?}/g, ""));
+    if (text) {
+      logMsg(name + ":\n" + text.replace(/@c{.*?}/g, ""));
+    }
     super.showDialogue(text, name, delay, callback, callbackDelay, prompt, promptDelay);
   }
 
