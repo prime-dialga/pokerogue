@@ -129,6 +129,7 @@ export class UiInputs {
     case Mode.CONFIRM:
     case Mode.MENU:
     case Mode.SETTINGS:
+    case Mode.MSG_LOG:
     case Mode.ACHIEVEMENTS:
       this.scene.ui.revertMode();
       this.scene.playSound("select");
