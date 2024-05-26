@@ -1,10 +1,12 @@
 import { SimpleTranslationEntries } from "#app/plugins/i18n";
 
 export const menuUiHandler: SimpleTranslationEntries = {
+  "MSG_LOG": "Message Log",
   "GAME_SETTINGS": "Spieleinstellungen",
   "ACHIEVEMENTS": "Erfolge",
   "STATS": "Statistiken",
   "VOUCHERS": "Gutscheine",
+  "EGGS": "Eier",
   "EGG_LIST": "Eierliste",
   "EGG_GACHA": "Eier-Gacha",
   "MANAGE_DATA": "Daten verwalten",

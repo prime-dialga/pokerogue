@@ -3,6 +3,7 @@ import { addBBCodeTextObject, addTextObject, getTextColor, TextStyle } from "./t
 import { Mode } from "./ui";
 import * as Utils from "../utils";
 import MessageUiHandler from "./message-ui-handler";
+import {logMsg} from "./message-log-ui-handler";
 import { getStatName, Stat } from "../data/pokemon-stat";
 import { addWindow } from "./ui-theme";
 import BBCodeText from "phaser3-rex-plugins/plugins/bbcodetext";
@@ -158,11 +159,17 @@ export default class BattleMessageUiHandler extends MessageUiHandler {
 
   showText(text: string, delay?: integer, callback?: Function, callbackDelay?: integer, prompt?: boolean, promptDelay?: integer) {
     this.hideNameText();
+    if (text) {
+      logMsg(text.replace(/@c{.*?}/g, ""));
+    }
     super.showText(text, delay, callback, callbackDelay, prompt, promptDelay);
   }
 
   showDialogue(text: string, name: string, delay?: integer, callback?: Function, callbackDelay?: integer, prompt?: boolean, promptDelay?: integer) {
     this.showNameText(name);
+    if (text) {
+      logMsg(name + ":\n" + text.replace(/@c{.*?}/g, ""));
+    }
     super.showDialogue(text, name, delay, callback, callbackDelay, prompt, promptDelay);
   }
 

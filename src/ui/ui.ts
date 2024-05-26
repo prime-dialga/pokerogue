@@ -13,6 +13,7 @@ import StarterSelectUiHandler from "./starter-select-ui-handler";
 import EvolutionSceneHandler from "./evolution-scene-handler";
 import TargetSelectUiHandler from "./target-select-ui-handler";
 import SettingsUiHandler from "./settings-ui-handler";
+import MessageLogUiHandler from "./message-log-ui-handler";
 import { TextStyle, addTextObject } from "./text";
 import AchvBar from "./achv-bar";
 import MenuUiHandler from "./menu-ui-handler";
@@ -66,7 +67,8 @@ export enum Mode {
   LOADING,
   SESSION_RELOAD,
   UNAVAILABLE,
-  OUTDATED
+  OUTDATED,
+  MSG_LOG,
 }
 
 const transitionModes = [
@@ -86,6 +88,7 @@ const noTransitionModes = [
   Mode.OPTION_SELECT,
   Mode.MENU,
   Mode.MENU_OPTION_SELECT,
+  Mode.MSG_LOG,
   Mode.SETTINGS,
   Mode.ACHIEVEMENTS,
   Mode.GAME_STATS,
@@ -147,7 +150,8 @@ export default class UI extends Phaser.GameObjects.Container {
       new LoadingModalUiHandler(scene),
       new SessionReloadModalUiHandler(scene),
       new UnavailableModalUiHandler(scene),
-      new OutdatedModalUiHandler(scene)
+      new OutdatedModalUiHandler(scene),
+      new MessageLogUiHandler(scene),
     ];
   }
 

@@ -12,12 +12,11 @@ import i18next from "../plugins/i18n";
 import {Button} from "../enums/buttons";
 
 export enum MenuOptions {
+  MSG_LOG,
   GAME_SETTINGS,
   ACHIEVEMENTS,
   STATS,
-  VOUCHERS,
-  EGG_LIST,
-  EGG_GACHA,
+  EGGS,
   MANAGE_DATA,
   COMMUNITY,
   SAVE_AND_QUIT,
@@ -40,6 +39,7 @@ export default class MenuUiHandler extends MessageUiHandler {
   protected ignoredMenuOptions: MenuOptions[];
   protected menuOptions: MenuOptions[];
 
+  protected eggMenu : OptionSelectConfig;
   protected manageDataConfig: OptionSelectConfig;
   protected communityConfig: OptionSelectConfig;
 
@@ -90,6 +90,51 @@ export default class MenuUiHandler extends MessageUiHandler {
     this.message = menuMessageText;
 
     this.menuContainer.add(this.menuMessageBoxContainer);
+
+    // new egg-options; same as before but now in their own separate menu.
+    const eggOptions: OptionSelectItem[] = [
+      {
+        label: i18next.t("menuUiHandler:VOUCHERS"),
+        handler: () => {
+          ui.setOverlayMode(Mode.VOUCHERS);
+          return true;
+        },
+        keepOpen: true
+      },
+      {
+        label: i18next.t("menuUiHandler:EGG_LIST"),
+        handler: () => {
+          if (this.scene.gameData.eggs.length) {
+            ui.revertMode();
+            ui.setOverlayMode(Mode.EGG_LIST);
+            return true;
+          }
+          return false;
+        },
+        keepOpen: true
+      },
+      {
+        label: i18next.t("menuUiHandler:EGG_GACHA"),
+        handler: () => {
+          ui.revertMode();
+          ui.setOverlayMode(Mode.EGG_GACHA);
+          return true;
+        },
+        keepOpen: true
+      },
+      {
+        label: i18next.t("menuUiHandler:cancel"),
+        handler: () => {
+          this.scene.ui.revertMode();
+          return true;
+        }
+      }
+    ];
+
+    this.eggMenu = {
+      xOffset: 98,
+      options: eggOptions
+    };
 
     const manageDataOptions = [];
 
@@ -262,6 +307,10 @@ export default class MenuUiHandler extends MessageUiHandler {
         }
       }
       switch (adjustedCursor) {
+      case MenuOptions.MSG_LOG:
+        ui.setOverlayMode(Mode.MSG_LOG);
+        success = true;
+        break;
       case MenuOptions.GAME_SETTINGS:
         ui.setOverlayMode(Mode.SETTINGS);
         success = true;
@@ -274,22 +323,8 @@ export default class MenuUiHandler extends MessageUiHandler {
         ui.setOverlayMode(Mode.GAME_STATS);
         success = true;
         break;
-      case MenuOptions.VOUCHERS:
-        ui.setOverlayMode(Mode.VOUCHERS);
-        success = true;
-        break;
-      case MenuOptions.EGG_LIST:
-        if (this.scene.gameData.eggs.length) {
-          ui.revertMode();
-          ui.setOverlayMode(Mode.EGG_LIST);
-          success = true;
-        } else {
-          error = true;
-        }
-        break;
-      case MenuOptions.EGG_GACHA:
-        ui.revertMode();
-        ui.setOverlayMode(Mode.EGG_GACHA);
+      case MenuOptions.EGGS:
+        ui.setOverlayMode(Mode.MENU_OPTION_SELECT, this.eggMenu);
         success = true;
         break;
       case MenuOptions.MANAGE_DATA:
