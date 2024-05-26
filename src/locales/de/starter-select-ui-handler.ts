@@ -30,6 +30,7 @@ export const starterSelectUiHandler: SimpleTranslationEntries = {
   "manageNature": "Wesen ändern",
   "useCandies": "Bonbons verwenden",
   "selectNature": "Wähle das neue Wesen.",
+  "neutralNature": "Neutral",
   "selectMoveSwapOut": "Wähle die zu ersetzende Attacke.",
   "selectMoveSwapWith": "Wähle die gewünschte Attacke.",
   "unlockPassive": "Passiv-Skill freischalten",
